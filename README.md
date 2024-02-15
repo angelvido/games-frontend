@@ -56,7 +56,7 @@ _The steps to get working the project are the following ones:_
 
 1. Clone the repo
     ```bash
-    git clone https://github.com/Mariovido/portfolio-frontend.git
+    git clone https://github.com/angelvido/games-frontend
     ```
 2. Run the following command.
     ```bash
