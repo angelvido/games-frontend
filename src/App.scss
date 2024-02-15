@@ -1,0 +1,75 @@
+@import "./utils/styles/variables.module";
+
+.app {
+  position: relative;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-color;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  text-indent: 0;
+  border-collapse: collapse;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 3.2em;
+    line-height: 1.1;
+  }
+
+  .modeButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      border-radius: 8px;
+      border: 1px solid transparent;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.25s;
+      margin: 20px;
+    }
+    button:hover {
+      border-color: #646cff;
+    }
+    button:focus,
+    button:focus-visible {
+      outline: 4px auto -webkit-focus-ring-color;
+    }
+  }
+
+  .techInfo {
+    margin-top: auto;
+    text-align: center;
+
+    .techLogo {
+      width: 35px;
+      height: 35px;
+      margin: 10px;
+    }
+  }
+}

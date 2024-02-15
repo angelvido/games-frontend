@@ -1,0 +1,25 @@
+@import '/src/utils/styles/variables.module';
+@import '/src/utils/styles/imports';
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb;
+}
+
+html {
+  font-size: 110%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Gabarito', sans-serif;
+  color: $primary-color;
+  background-color: rgba($color: $darkest-color, $alpha: 0.95);
+  display: block;
+  line-height: 1.25;
+  overflow: hidden;
+}
