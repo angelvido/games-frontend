@@ -37,7 +37,7 @@ table {
     line-height: 1.1;
   }
 
-  .modeButtons {
+  .userForms {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,24 +52,13 @@ table {
       cursor: pointer;
       transition: border-color 0.25s;
       margin: 20px;
-    }
-    button:hover {
-      border-color: #646cff;
-    }
-    button:focus,
-    button:focus-visible {
-      outline: 4px auto -webkit-focus-ring-color;
-    }
-  }
-
-  .techInfo {
-    margin-top: auto;
-    text-align: center;
-
-    .techLogo {
-      width: 35px;
-      height: 35px;
-      margin: 10px;
+      &:hover {
+        border-color: #646cff;
+      }
+      &:focus,
+      &:focus-visible {
+        outline: 4px auto -webkit-focus-ring-color;
+      }
     }
   }
 }

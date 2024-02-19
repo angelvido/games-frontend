@@ -1,0 +1,15 @@
+.techInfo {
+  margin-top: auto;
+  margin-bottom: 15px;
+  text-align: center;
+
+  .techLogo {
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
