@@ -1,4 +1,4 @@
-import "./styles/Register.scss";
+import "./utils/styles/Register.scss";
 
 function Register() {
   return (

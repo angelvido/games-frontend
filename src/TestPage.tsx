@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./styles/TestPage.scss";
-import quizConfig from "../config/quizConfig";
-import additionalQuestions from "../config/additionalQuestions";
+import "./utils/styles/TestPage.scss";
+import quizConfig from "./config/quizConfig";
+import additionalQuestions from "./config/additionalQuestions";
 
 const initialQuestions = quizConfig;
 const additionalQuestion = additionalQuestions;

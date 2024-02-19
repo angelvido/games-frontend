@@ -1,11 +1,11 @@
 //import { useState } from 'react'
-import "./App.scss";
-import "./main.scss";
+import "./utils/styles/App.scss";
+import "./utils/styles/main.scss";
 import TechInfo from "./components/TechInfo.tsx";
 import Header from "./components/Header.tsx";
-//import Register from "./components/Register.tsx";
-//import Login from "./components/Login.tsx";
-import TestPage from "./components/TestPage.tsx";
+//import Register from "./Register.tsx";
+//import Login from "./Login.tsx";
+import TestPage from "./TestPage.tsx";
 
 function App() {
   return (
