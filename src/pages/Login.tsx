@@ -1,4 +1,4 @@
-import "./utils/styles/Login.scss";
+import "./styles/Login.scss";
 
 function Login() {
   return (

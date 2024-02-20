@@ -1,13 +1,4 @@
-interface Question {
-  question: string;
-  correctAnswer: string;
-  answers: Answer[];
-}
-
-interface Answer {
-  id: string;
-  text: string;
-}
+import { Question } from "../models/interfaces/Question";
 
 const additionalQuestions: Question[] = [
   {

@@ -1,12 +1,12 @@
-import reactLogo from "../assets/react.svg";
-import viteLogo from "../assets/vite.svg";
-import springLogo from "../assets/spring.svg";
-import javaLogo from "../assets/java.svg";
-import typescriptLogo from "../assets/typescript.svg";
+import reactLogo from "../assets/icons/react.svg";
+import viteLogo from "../assets/icons/vite.svg";
+import springLogo from "../assets/icons/spring.svg";
+import javaLogo from "../assets/icons/java.svg";
+import typescriptLogo from "../assets/icons/typescript.svg";
 
-import "./styles/TechInfo.scss";
+import "./styles/Footer.scss";
 
-function TechInfo() {
+function Footer() {
   return (
     <div className="techInfo">
       <div>
@@ -38,4 +38,4 @@ function TechInfo() {
   );
 }
 
-export default TechInfo;
+export default Footer;
