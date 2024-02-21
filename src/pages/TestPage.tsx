@@ -4,11 +4,11 @@ import "./styles/TestPage.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-import quizConfig from "../config/quizConfig1";
-import additionalQuestions from "../config/quizConfig2";
+import quizConfig1 from "../config/quizConfig1";
+import quizConfig2 from "../config/quizConfig2";
 
-const initialQuestions = quizConfig;
-const additionalQuestion = additionalQuestions;
+const initialQuestions = quizConfig1;
+const additionalQuestion = quizConfig2;
 
 interface Question {
   question: string;

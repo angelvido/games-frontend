@@ -1,6 +1,6 @@
 import { Question } from "../models/interfaces/Question";
 
-const quizConfig: Question[] = [
+const quizConfig1: Question[] = [
   {
     question: "¿Cuál es la capital de Francia?",
     correctAnswer: "B",
@@ -103,4 +103,4 @@ const quizConfig: Question[] = [
   },
 ];
 
-export default quizConfig;
+export default quizConfig1;
