@@ -7,19 +7,10 @@ import Header from "../components/Header";
 import quizConfig1 from "../config/quizConfig1";
 import quizConfig2 from "../config/quizConfig2";
 
+import { Question } from "../models/interfaces/Question";
+
 const initialQuestions = quizConfig1;
 const additionalQuestion = quizConfig2;
-
-interface Question {
-  question: string;
-  correctAnswer: string;
-  answers: Answer[];
-}
-
-interface Answer {
-  id: string;
-  text: string;
-}
 
 function TestPage() {
   const [questions, setQuestions] = useState<Question[]>(initialQuestions);
@@ -65,7 +56,16 @@ function TestPage() {
                 <button
                   onClick={() => handleAnswerClick(answer.id)}
                   disabled={showResult}
-                  className={selectedAnswer === answer.id ? (correctAnswer ? "correct-answer" : "incorrect-answer") : ""}
+                  className={
+                    `${selectedAnswer
+                      ? selectedAnswer === answer.id
+                        ? correctAnswer
+                          ? "correct-answer answered"
+                          : "incorrect-answer answered"
+                        : "unanswered"
+                      : ""
+                    } `
+                  }
                 >
                   {answer.id}) {answer.text}
                 </button>

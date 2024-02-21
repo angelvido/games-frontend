@@ -58,6 +58,26 @@
           &.incorrect-answer {
             background-color: $red-color;
           }
+
+          &.answered {
+            cursor: not-allowed;
+            pointer-events: none;
+            border: 3px solid transparent;
+            border-color: $primary-color;
+
+            &:hover {
+              background-color: inherit;
+            }
+          }
+
+          &.unanswered {
+            cursor: not-allowed;
+            pointer-events: none;
+
+            &:hover {
+              background-color: inherit;
+            }
+          }
         }
       }
     }
