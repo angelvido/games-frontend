@@ -2,7 +2,7 @@ import "./styles/Leaderboard.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-import leaderboardConfig from '../config/leaderboardConfig';
+import leaderboardConfig from "../config/leaderboardConfig";
 
 const leaderboardData = leaderboardConfig;
 
@@ -11,15 +11,15 @@ function Leaderboard() {
     <div className="container">
       <Header />
       <div className="leaderboard">
-        <h2>Leaderboard</h2>
+        <h2>Tabla de Puntuación</h2>
         <table>
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Username</th>
-              <th>Correct Answers</th>
-              <th>Incorrect Answers</th>
-              <th>Tests Played</th>
+              <th>Puesto</th>
+              <th>Nombre de usuario</th>
+              <th>Respuestas correctas</th>
+              <th>Respuestas incorrectas</th>
+              <th>Preguntas Jugadas</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +38,6 @@ function Leaderboard() {
       <Footer />
     </div>
   );
-};
+}
 
 export default Leaderboard;

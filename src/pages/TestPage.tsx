@@ -79,10 +79,10 @@ function TestPage() {
                 : `La respuesta ${selectedAnswer} es incorrecta.`}
             </div>
           )}
-          {currentQuestion < questions.length - 1 && (
+          {currentQuestion < questions.length - 1 && selectedAnswer && (
             <button onClick={handleNextQuestion} className="nextQuestion">Siguiente Pregunta</button>
           )}
-          {showUpdateButton && (
+          {showUpdateButton && selectedAnswer && (
             <button onClick={handleEndOfQuestions} className="nextQuestion">Actualizar Preguntas</button>
           )}
         </div>
