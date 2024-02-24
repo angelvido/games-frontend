@@ -19,6 +19,7 @@ function TestPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showUpdateButton, setShowUpdateButton] = useState<boolean>(false);
   const [correctAnswer, setCorrectAnswer] = useState<boolean | null>(null);
+  const [score, setScore] = useState<number>(0);
 
   const handleNextQuestion = () => {
     setCurrentQuestion((prevQuestion) => prevQuestion + 1);
@@ -27,6 +28,7 @@ function TestPage() {
     if (currentQuestion === questions.length - 2) {
       setShowUpdateButton(true);
     }
+    setCorrectAnswer(null);
   };
 
   const handleAnswerClick = (selection: string) => {
@@ -34,6 +36,9 @@ function TestPage() {
     setShowResult(true);
     setSelectedAnswer(selection);
     setCorrectAnswer(isCorrectAnswer);
+    if(isCorrectAnswer) {
+      setScore(score + 1);
+    }
   };
 
   const handleEndOfQuestions = () => {
@@ -42,6 +47,8 @@ function TestPage() {
     setShowResult(false);
     setSelectedAnswer(null);
     setShowUpdateButton(false);
+    setCorrectAnswer(null);
+    setScore(0);
   };
 
   return (
@@ -49,6 +56,7 @@ function TestPage() {
       <div className="container">
         <Header />
         <div className="testAnswers">
+          <h3>Puntuación: {score}/10</h3>
           <div className="questionContainer">
             <h4>{questions[currentQuestion].question}</h4>
             {questions[currentQuestion].answers.map((answer) => (
@@ -65,6 +73,8 @@ function TestPage() {
                         : "unanswered"
                       : ""
                     } `
+                    +
+                    `${correctAnswer == false && answer.id === questions[currentQuestion].correctAnswer ? "correct-answer" : ""}`
                   }
                 >
                   {answer.id}) {answer.text}

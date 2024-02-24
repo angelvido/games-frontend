@@ -1,40 +1,50 @@
-.registerBox {
+@import "../../utils/styles/variables.module";
+
+.container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-form {
-  padding: 20px;
-  text-align: center;
-}
-
-h3 {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-input {
+  flex-direction: column;
+  min-height: 100vh;
   width: 100%;
-  padding: 8px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-  border-radius: 8px;
-}
 
-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+  .registerBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
 
-button:hover {
-  background-color: #0056b3;
+  form {
+    padding: 20px;
+    text-align: center;
+  }
+
+  h3 {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+
+  button {
+    background-color: $darkest-color;
+    color: $primary-color;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: $dark-color;
+  }
 }
