@@ -1,4 +1,4 @@
-export interface LeaderboardEntry {
+export interface LeaderboardTableRowProps {
     userId: string;
     username: string; 
     totalCorrectAnswers: number;

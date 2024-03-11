@@ -15,6 +15,21 @@
     img {
       width: 18px;
       height: 18px;
+      transform-origin: center;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    &:hover img {
+      transform: (360deg);
+      animation: rotate 0.8s;
     }
 
     &:hover {

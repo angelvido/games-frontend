@@ -1,4 +1,3 @@
-//import { useState } from 'react'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.scss";
 import "./main.scss";
@@ -16,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Menu /> },
       { path: "game", element: <TestPage /> },
-      { path: "leaderboard", element: <Leaderboard /> },
+      { path: "stats", element: <Leaderboard /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
     ],

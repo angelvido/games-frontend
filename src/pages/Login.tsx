@@ -12,11 +12,11 @@ function Login() {
         <form>
           <h3>Inicio de sesión</h3>
 
-          <label>Nombre de usuario o correo electrónico:</label>
-          <input type="text" id="nombre" name="nombre" required />
+          <label>Nombre de usuario:</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ingrese nombre de usuario" required />
 
           <label>Contraseña:</label>
-          <input type="password" id="contraseña" name="contraseña" required />
+          <input type="password" id="contraseña" name="contraseña" placeholder="Ingrese contraseña" required />
 
           <button>Iniciar Sesión</button>
         </form>

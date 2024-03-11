@@ -1,6 +1,6 @@
-import { LeaderboardEntry } from "../models/interfaces/LeaderboardEntry";
+import { LeaderboardTableRowProps } from "../models/interfaces/LeaderboardTableRowProps";
 
-const leaderboardConfig: LeaderboardEntry[] = [
+const leaderboardConfig: LeaderboardTableRowProps[] = [
     {
       "userId": "1",
       "username": "usuario1",
