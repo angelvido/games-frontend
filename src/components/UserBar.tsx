@@ -4,9 +4,22 @@ import registerLogo from "../assets/icons/register.svg";
 import userLogo from "../assets/icons/user.svg";
 
 import "./styles/UserBar.scss";
+import { useEffect, useState } from "react";
 
 function UserBar() {
-  const user = null;          //Cambiar
+  const [user, setUser] = useState<string | null>(null);
+
+  const updateUser = (newUser: string) => {
+    setUser(newUser);
+  };
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if (username) {
+      setUser(username);
+    }
+  }, []);
+
   return (
     <nav className="userBar">
       {!user ? (
@@ -19,8 +32,8 @@ function UserBar() {
           </Link>
         </>
       ) : (
-        <Link to="/user">
-          <img src={userLogo} alt="User logo" /> Usuario
+        <Link to={`/${user}`}>
+          <img src={userLogo} alt="User logo" /> {`${user}`}
         </Link>
       )}
     </nav>

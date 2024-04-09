@@ -5,35 +5,9 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-
-  .loginBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  form {
-    padding: auto;
-    text-align: center;
-  }
-
-  h3 {
-    margin: auto;
-  }
-
-  label {
-    display: block;
-    margin: auto;
-  }
-
-  input {
-    width: 100%;
-    padding: 8px;
-    margin: 3px;
-    box-sizing: border-box;
-    border-radius: 8px;
-  }
-
+  margin: auto;
+  text-align: center;
+  
   button {
     background-color: $darkest-color;
     color: $primary-color;
