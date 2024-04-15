@@ -7,15 +7,34 @@
   width: 100%;
   margin: auto;
   text-align: center;
+  justify-content: space-between;
+
+  .userDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    .userInfo {
+      padding: 40px;
+    }
+    .loggingInfo {
+      padding: 40px;
+
+      .loggingAttempts {
+        padding: 20px;
+      }
+    }
+  }
   
-  button {
+  .logoutButton {
     background-color: $darkest-color;
     color: $primary-color;
     padding: 10px 15px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin: 3px;
+    margin: auto;
+    width: 150px;
   }
 
   button:hover {

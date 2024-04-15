@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./styles/TestPage.scss";
 import Footer from "../components/Footer";
@@ -20,6 +20,28 @@ function TestPage() {
   const [showUpdateButton, setShowUpdateButton] = useState<boolean>(false);
   const [correctAnswer, setCorrectAnswer] = useState<boolean | null>(null);
   const [score, setScore] = useState<number>(0);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/question/getQuestion", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Error al obtener la pregunta: ', error);
+      }
+    };
+
+    fetchQuestion();
+  }, [])
 
   const handleNextQuestion = () => {
     setCurrentQuestion((prevQuestion) => prevQuestion + 1);
