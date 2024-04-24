@@ -5,6 +5,6 @@ export interface Question {
 }
 
 interface Answer {
-  id: string;
+  letter: string;
   text: string;
 }

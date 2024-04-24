@@ -8,40 +8,48 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    name: '',
-    lastname: '',
-    email: '',
-    password: ''
+    username: "",
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (formData.password !== formData.confirmPassword) {
+      console.error("Las contraseñas no coinciden.");
+      return;
+    }
+
+    const { confirmPassword, ...dataToSend } = formData;
+
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8080/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.status == 201) {
-        console.log('Usuario registrado exitosamente');
+        console.log("Usuario registrado exitosamente");
         navigate("/login");
       } else {
-        console.error('Error al registrar el usuario: ', response.statusText);
+        console.error("Error al registrar el usuario: ", response.statusText);
       }
     } catch (error) {
-      console.error('Error al realizar la solicitud: ', error);
+      console.error("Error al realizar la solicitud: ", error);
     }
   };
 
@@ -54,16 +62,48 @@ function Register() {
             <h3>Registro de usuario</h3>
 
             <label>Nombre de usuario:</label>
-            <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} placeholder="Ingrese un nombre de usuario" required />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Ingrese un nombre de usuario"
+              required
+            />
 
             <label>Nombre:</label>
-            <input type="text" id="nombre" name="name" value={formData.name} onChange={handleChange} placeholder="Ingrese su nombre" required />
+            <input
+              type="text"
+              id="nombre"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ingrese su nombre"
+              required
+            />
 
             <label>Apellidos:</label>
-            <input type="text" id="apellidos" name="lastname" value={formData.lastname} onChange={handleChange} placeholder="Ingrese sus apellidos" required />
+            <input
+              type="text"
+              id="apellidos"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              placeholder="Ingrese sus apellidos"
+              required
+            />
 
             <label>Correo electrónico:</label>
-            <input type="email" id="correo" name="email" value={formData.email} onChange={handleChange} placeholder="Ingrese su correo electrónico" required />
+            <input
+              type="email"
+              id="correo"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Ingrese su correo electrónico"
+              required
+            />
 
             <label>Contraseña:</label>
             <input
@@ -80,7 +120,9 @@ function Register() {
             <input
               type="password"
               id="contraseña2"
-              name="contraseña2"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               placeholder="Ingrese de nuevo la contraseña"
               required
             />

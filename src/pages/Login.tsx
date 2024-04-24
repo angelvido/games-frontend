@@ -34,11 +34,10 @@ function Login() {
       if (response.status == 200) {
         const data = await response.json();
         const { username, token } = data;
-        //Se guarda en el almacenamiento local, para borrar localStorage.clear();
         localStorage.setItem('username', username);
         localStorage.setItem('token', token);
         console.log('Inicio de sesión de usuario realizado correctamente');
-        navigate(`/${formData.username}`);
+        navigate(`/${username}`);
       } else {
         console.error('Error al iniciar sesión el usuario: ', response.statusText);
       }

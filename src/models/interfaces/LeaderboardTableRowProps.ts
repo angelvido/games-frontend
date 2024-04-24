@@ -1,7 +1,5 @@
 export interface LeaderboardTableRowProps {
-    userId: string;
     username: string; 
-    totalCorrectAnswers: number;
-    totalIncorrectAnswers: number;
-    totalTestPlayed: number;
+    correct_answers: number;
+    games_played: number;
 }

@@ -4,120 +4,180 @@ import "./styles/TestPage.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-import quizConfig1 from "../config/quizConfig1";
-import quizConfig2 from "../config/quizConfig2";
-
 import { Question } from "../models/interfaces/Question";
 
-const initialQuestions = quizConfig1;
-const additionalQuestion = quizConfig2;
-
 function TestPage() {
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions);
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [showUpdateButton, setShowUpdateButton] = useState<boolean>(false);
   const [correctAnswer, setCorrectAnswer] = useState<boolean | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [questions, setQuestions] = useState<number>(1);
+  const [answered, setAnswered] = useState<boolean>(false);
+  const [badResponse, setBadResponse] = useState<boolean>(false);
+  const [userExists, setUserExists] = useState<boolean>(false);
 
   const token = localStorage.getItem("token");
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/question/getQuestion", {
-          method: 'GET',
+    if (token != null && username != null) {
+      setUserExists(true);
+    }    
+  }, [token, username]);
+
+  const fetchQuestion = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/question/getQuestion",
+        {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        console.log(data);
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      setBadResponse(true);
+      console.error("Error al obtener la pregunta: ", error);
+    }
+  };
+
+  const sendStat = async (isCorrectAnswer: boolean) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/stats/addStat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ result: isCorrectAnswer }),
+      });
+      if (!response.ok) {
+        throw new Error("Error al enviar la estadística");
+      }
+    } catch (error) {
+      console.error("Error al enviar la estadística: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadQuestion = async () => {
+      try {
+        const data = await fetchQuestion();
+        setCurrentQuestion(data);
       } catch (error) {
-        console.error('Error al obtener la pregunta: ', error);
+        console.error(error);
       }
     };
 
-    fetchQuestion();
-  }, [])
-
-  const handleNextQuestion = () => {
-    setCurrentQuestion((prevQuestion) => prevQuestion + 1);
-    setShowResult(false);
-    setSelectedAnswer(null);
-    if (currentQuestion === questions.length - 2) {
-      setShowUpdateButton(true);
-    }
-    setCorrectAnswer(null);
-  };
+    loadQuestion();
+  }, []);
 
   const handleAnswerClick = (selection: string) => {
-    const isCorrectAnswer = selection === questions[currentQuestion].correctAnswer;
+    const isCorrectAnswer = selection === currentQuestion?.correctAnswer;
     setShowResult(true);
     setSelectedAnswer(selection);
     setCorrectAnswer(isCorrectAnswer);
-    if(isCorrectAnswer) {
+    if (isCorrectAnswer) {
       setScore(score + 1);
     }
+    setAnswered(true);
+    sendStat(isCorrectAnswer);
   };
 
-  const handleEndOfQuestions = () => {
-    setQuestions(additionalQuestion);
-    setCurrentQuestion(0);
+  const handleNextQuestion = async () => {
+    setBadResponse(false);
     setShowResult(false);
     setSelectedAnswer(null);
-    setShowUpdateButton(false);
     setCorrectAnswer(null);
-    setScore(0);
+    setAnswered(false);
+    if (!badResponse) {
+      setQuestions(questions + 1);
+    }
+    setCurrentQuestion(null);
+    const data = await fetchQuestion();
+    setCurrentQuestion(data);
   };
 
   return (
     <>
       <div className="container">
         <Header />
-        <div className="testAnswers">
-          <h3>Puntuación: {score}/10</h3>
-          <div className="questionContainer">
-            <h4>{questions[currentQuestion].question}</h4>
-            {questions[currentQuestion].answers.map((answer) => (
-              <div key={answer.id}>
-                <button
-                  onClick={() => handleAnswerClick(answer.id)}
-                  disabled={showResult}
-                  className={
-                    `${selectedAnswer
-                      ? selectedAnswer === answer.id
-                        ? correctAnswer
-                          ? "correct-answer answered"
-                          : "incorrect-answer answered"
-                        : "unanswered"
-                      : ""
-                    } `
-                    +
-                    `${correctAnswer == false && answer.id === questions[currentQuestion].correctAnswer ? "correct-answer" : ""}`
-                  }
-                >
-                  {answer.id}) {answer.text}
+        {userExists ? (
+          <>
+            <div className="testAnswers">
+              <h3>
+                Puntuación: {score}/{questions}
+              </h3>
+              {currentQuestion ? (
+                <>
+                  <div className="questionContainer">
+                    <h4>{currentQuestion.question}</h4>
+                    {currentQuestion.answers
+                      .sort((a, b) => a.letter.localeCompare(b.letter))
+                      .map((answer) => (
+                        <div key={answer.letter}>
+                          <button
+                            onClick={() => handleAnswerClick(answer.letter)}
+                            disabled={showResult}
+                            className={
+                              `${
+                                selectedAnswer
+                                  ? selectedAnswer === answer.letter
+                                    ? correctAnswer
+                                      ? "correct-answer answered"
+                                      : "incorrect-answer answered"
+                                    : "unanswered"
+                                  : ""
+                              } ` +
+                              `${
+                                correctAnswer == false &&
+                                answer.letter === currentQuestion.correctAnswer
+                                  ? "correct-answer"
+                                  : ""
+                              }`
+                            }
+                          >
+                            {answer.letter}) {answer.text}
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                </>
+              ) : badResponse ? (
+                <div className="error-container">
+                  <p>Error al obtener la pregunta. Intenta de nuevo.</p>
+                  <button onClick={handleNextQuestion}>
+                    Intentar de nuevo
+                  </button>
+                </div>
+              ) : (
+                //Aqui quiero que aparezca en funcion de badresponse un mensaje de error en la peticion de la pregunta y un boton para realizar otra peticion o Cargando
+                <p>Cargando preguntas</p>
+              )}
+              {showResult && (
+                <div>
+                  {selectedAnswer === currentQuestion?.correctAnswer
+                    ? `!!La respuesta ${selectedAnswer} es correcta!!`
+                    : `La respuesta ${selectedAnswer} es incorrecta.`}
+                </div>
+              )}
+              {answered && (
+                <button onClick={handleNextQuestion} className="nextQuestion">
+                  Siguiente Pregunta
                 </button>
-              </div>
-            ))}
-          </div>
-          {showResult && (
-            <div>
-              {selectedAnswer === questions[currentQuestion].correctAnswer
-                ? `!!La respuesta ${selectedAnswer} es correcta!!`
-                : `La respuesta ${selectedAnswer} es incorrecta.`}
+              )}
             </div>
-          )}
-          {currentQuestion < questions.length - 1 && selectedAnswer && (
-            <button onClick={handleNextQuestion} className="nextQuestion">Siguiente Pregunta</button>
-          )}
-          {showUpdateButton && selectedAnswer && (
-            <button onClick={handleEndOfQuestions} className="nextQuestion">Actualizar Preguntas</button>
-          )}
-        </div>
+          </>
+        ) : (
+          <>
+            <p>Necesita tener iniciada sesión con un usuario válido para poder jugar al juego de preguntas.</p>
+          </>
+        )}
         <Footer />
       </div>
     </>

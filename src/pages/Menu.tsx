@@ -11,10 +11,12 @@ function Menu() {
     <>
       <div className="container">
         <Header />
-        <p>Este es el conjunto de juegos disponibles en esta plataforma de juegos. Cada uno de ellos funciona con llamadas a la API de OpenAI.</p>
+        <p>Aquí se encuentran los juegos desarrollados en esta plataforma.</p>
         <div className="cardContainer">
           {cardsData.map((card, index) => (
-            <Card key={index} data={card} />
+            <a href={card.url}>
+              <Card key={index} data={card} />
+            </a>
           ))}
         </div>
         <Footer />
