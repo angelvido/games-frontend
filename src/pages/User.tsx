@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 import "./styles/User.scss";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { UserData } from "../models/interfaces/UserData";
 
 function User() {
@@ -24,12 +24,11 @@ function User() {
   >([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const headers = {
+  const headers = useMemo(() => ({
     Authorization: `Bearer ${token}`,
-  };
+  }), [token]);
 
-  const fetchUserDataAndLoginAttempts = () => {
-    //Peticion Datos de Usuario
+  const fetchUserData = useCallback(() => {
     fetch("http://localhost:8080/api/user/data", {
       method: "GET",
       headers: headers,
@@ -47,8 +46,9 @@ function User() {
       .catch((error) => {
         console.error("Error: ", error);
       });
+  }, [headers]);
 
-    //Peticion Intentos de Inicio de Sesion del Usuario
+  const fetchLoginAttempts = useCallback(() => {
     fetch("http://localhost:8080/api/auth/loginAttempts", {
       method: "GET",
       headers: headers,
@@ -68,28 +68,36 @@ function User() {
       .catch((error) => {
         console.error("Error: ", error);
       });
-  };
+  }, [headers]);
 
   const fetchUpdateUser = (updatedData: UserData) => {
-    const dataToSend = { ...updatedData };
-    delete dataToSend['key'];
-    console.log(dataToSend);
+    const dataToSend = {
+      username: updatedData.username,
+      name: updatedData.name,
+      lastname: updatedData.lastname,
+      email: updatedData.email
+    };
+    console.log("Data to send:", dataToSend);
 
     fetch("http://localhost:8080/api/user/update", {
       method: "PUT",
-      headers: headers,
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(dataToSend),
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al actualizar los datos del usuario.");
         }
-        return response.json();
+        return {};
       })
-      .then((data) => {
-        setUserData(data);
-        console.log("Log: ", data);
-        fetchUserDataAndLoginAttempts();
+      .then(() => {
+        console.log("Actualización exitosa.");
+        localStorage.removeItem("username");
+        localStorage.removeItem("token");
+        navigate("/login");
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -97,8 +105,9 @@ function User() {
   };
 
   useEffect(() => {
-    fetchUserDataAndLoginAttempts();
-  }, []);
+    fetchUserData();
+    fetchLoginAttempts();
+  }, [fetchUserData, fetchLoginAttempts]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -107,13 +116,19 @@ function User() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
     const updatedData: UserData = { ...userData };
+  
+    // Copia los datos existentes si los campos están vacíos en formData
     Object.keys(formData).forEach((key) => {
-      if (formData[key] !== userData[key]) {
+      if (formData[key].trim() === "") {
+        updatedData[key] = userData[key];
+      } else {
         updatedData[key] = formData[key];
       }
     });
-
+  
+    // Llama a fetchUpdateUser con los datos actualizados
     if (Object.keys(updatedData).length > 0) {
       fetchUpdateUser(updatedData);
     } else {
@@ -124,7 +139,7 @@ function User() {
   const handleLogout = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("token");
-    navigate("/menu");
+    navigate("/");
   };
 
   return (

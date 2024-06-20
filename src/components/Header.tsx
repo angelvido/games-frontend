@@ -9,7 +9,7 @@ function Header() {
       <div className="headerContainer">
         <NavBar />
         <div className="titleContainer">
-          <h1>Playground Games</h1>
+          <h1>Desarrollo de Aplicación de Juegos de preguntas soportados con IA</h1>
           <h2>Proyecto Desarrollado por Ángel Vidal Domínguez</h2>
         </div>
         <UserBar />

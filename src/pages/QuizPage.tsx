@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-import "./styles/TestPage.scss";
+import "./styles/QuizPage.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 import { Question } from "../models/interfaces/Question";
+import QuizPageProps from "../models/interfaces/QuizPageProps";
 
-function TestPage() {
+function QuizPage({ topic }: QuizPageProps) {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -19,21 +20,21 @@ function TestPage() {
 
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
+  const validTopics = ["SPO", "SCI", "TECH", "HIS", "ART", "GEO"];
 
   useEffect(() => {
     if (token != null && username != null) {
       setUserExists(true);
-    }    
+    }
   }, [token, username]);
 
-  const fetchQuestion = async () => {
+  const fetchQuestion = useCallback(async (topic: string) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/question/getQuestion",
+        `http://localhost:8080/api/question/getQuestion?topic=${topic}`,
         {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
@@ -44,7 +45,7 @@ function TestPage() {
       setBadResponse(true);
       console.error("Error al obtener la pregunta: ", error);
     }
-  };
+  }, [token]);
 
   const sendStat = async (isCorrectAnswer: boolean) => {
     try {
@@ -67,7 +68,7 @@ function TestPage() {
   useEffect(() => {
     const loadQuestion = async () => {
       try {
-        const data = await fetchQuestion();
+        const data = await fetchQuestion(topic);
         setCurrentQuestion(data);
       } catch (error) {
         console.error(error);
@@ -75,7 +76,7 @@ function TestPage() {
     };
 
     loadQuestion();
-  }, []);
+  }, [topic, fetchQuestion]);
 
   const handleAnswerClick = (selection: string) => {
     const isCorrectAnswer = selection === currentQuestion?.correctAnswer;
@@ -99,9 +100,14 @@ function TestPage() {
       setQuestions(questions + 1);
     }
     setCurrentQuestion(null);
-    const data = await fetchQuestion();
+    const data = await fetchQuestion(topic);
     setCurrentQuestion(data);
   };
+
+  if (!validTopics.includes(topic)) {
+    // TODO - Mejorar este mensaje
+    return <p>El tema proporcionado no es válido.</p>;
+  }
 
   return (
     <>
@@ -156,7 +162,7 @@ function TestPage() {
                   </button>
                 </div>
               ) : (
-                //Aqui quiero que aparezca en funcion de badresponse un mensaje de error en la peticion de la pregunta y un boton para realizar otra peticion o Cargando
+                // TODO - MEJORAR ESTE MENSAJE PARA QUE SEA ALGO MAS VISTOSO
                 <p>Cargando preguntas</p>
               )}
               {showResult && (
@@ -174,8 +180,12 @@ function TestPage() {
             </div>
           </>
         ) : (
+          // TODO - MEJORAR ESTE MENSAJE PARA QUE SEA ALGO MAS VISTOSO E INCLUSO AÑADIR UN BOTON AL LOGIN O ALGO
           <>
-            <p>Necesita tener iniciada sesión con un usuario válido para poder jugar al juego de preguntas.</p>
+            <p>
+              Necesita tener iniciada sesión con un usuario válido para poder
+              jugar al juego de preguntas.
+            </p>
           </>
         )}
         <Footer />
@@ -184,4 +194,4 @@ function TestPage() {
   );
 }
 
-export default TestPage;
+export default QuizPage;

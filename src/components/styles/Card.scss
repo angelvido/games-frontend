@@ -1,10 +1,10 @@
 @import "../../utils/styles/variables.module";
 
 .card {
-  padding: 30px;
-  margin: auto;
-  width: 300px;
-  height: 300px;
+  padding: 20px;
+  margin: 10px;
+  width: 200px;
+  height: 200px;
   background-color: $dark-color;
   position: relative;
   border-radius: 8px;
@@ -15,14 +15,14 @@
 }
 
 .card h3 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: $primary-color;
   text-align: center;
   z-index: 2;
 }
 
 .card p {
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: $primary-color;
   text-align: center;
   z-index: 2;

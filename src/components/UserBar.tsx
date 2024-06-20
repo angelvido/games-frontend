@@ -8,11 +8,7 @@ import { useEffect, useState } from "react";
 
 function UserBar() {
   const [user, setUser] = useState<string | null>(null);
-
-  const updateUser = (newUser: string) => {
-    setUser(newUser);
-  };
-
+  
   useEffect(() => {
     const username = localStorage.getItem('username');
     if (username) {

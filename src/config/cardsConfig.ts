@@ -2,20 +2,35 @@ import CardData from "../models/interfaces/CardData";
 
 const cardsData: CardData[] = [
   {
-    title: "Quizzes",
-    text: "El juego de Quizzes trata sobre preguntas tipo test de cultura general. Y al igual que los demás juegos, las preguntas y respuestas están generadas con IA.",
-    url: "/game"
-  },
-  /* {
-    title: "**Capitales**",
-    text: "El juego de Capitales trata sobre preguntas sobre las capitales del mundo. Y al igual que los demás juegos, las preguntas y respuestas están generadas con IA.",
-    url: "/"
+    title: "Deportes",
+    text: "Las preguntas generadas en este juego serán preguntas sobre deportes.",
+    url: "/game/sports"
   },
   {
-    title: "**Fechas**",
-    text: "El juego de Fechas trata sobre preguntas sobre la fecha de acontecimientos históricos. Y al igual que los demás juegos, preguntas y respuestas están generadas con IA.",
-    url: "/"
-  } */
+    title: "Ciencia",
+    text: "Las preguntas generadas en este juego serán preguntas sobre ciencia.",
+    url: "/game/science"
+  },
+  {
+    title: "Tecnología",
+    text: "Las preguntas generadas en este juego serán preguntas sobre tecnología.",
+    url: "/game/technology"
+  },
+  {
+    title: "Historia",
+    text: "Las preguntas generadas en este juego serán preguntas sobre historia.",
+    url: "/game/history"
+  },
+  {
+    title: "Arte y literatura",
+    text: "Las preguntas generadas en este juego serán preguntas sobre arte y literatura.",
+    url: "/game/art"
+  },
+  {
+    title: "Geografría",
+    text: "Las preguntas generadas en este juego serán preguntas sobre geografía.",
+    url: "/game/geography"
+  }
 ];
 
 export default cardsData;

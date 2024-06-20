@@ -26,7 +26,7 @@ function Footer() {
         <a href="https://spring.io/" target="_blank">
           <img src={springLogo} className="techLogo" alt="Spring Boot logo" />
         </a>
-        <a href="https://www.java.com/es/" target="_blank">
+        <a href="https://dev.java/learn/" target="_blank">
           <img src={javaLogo} className="techLogo" alt="Java logo" />
         </a>
       </div>

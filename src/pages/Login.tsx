@@ -37,7 +37,7 @@ function Login() {
         localStorage.setItem('username', username);
         localStorage.setItem('token', token);
         console.log('Inicio de sesión de usuario realizado correctamente');
-        navigate(`/${username}`);
+        navigate("/");
       } else {
         console.error('Error al iniciar sesión el usuario: ', response.statusText);
       }
