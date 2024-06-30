@@ -95,5 +95,22 @@
         background-color: $dark-color;
       }
     }
+
+    .menuButton,
+    .nextQuestion {
+      padding: 30px 30px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: $darkest-color;
+      color: $primary-color;
+      border: none;
+      border-radius: 20px;
+      width: 200px;
+      height: 70px;
+
+      &:hover {
+        background-color: $dark-color;
+      }
+    }
   }
 }

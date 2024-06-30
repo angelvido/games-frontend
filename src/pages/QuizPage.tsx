@@ -3,9 +3,12 @@ import { useEffect, useState, useCallback } from "react";
 import "./styles/QuizPage.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import homeLogo from "../assets/icons/home.svg";
+import gameLogo from "../assets/icons/game.svg";
 
 import { Question } from "../models/interfaces/Question";
 import QuizPageProps from "../models/interfaces/QuizPageProps";
+import { useNavigate } from "react-router-dom";
 
 function QuizPage({ topic }: QuizPageProps) {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -18,6 +21,8 @@ function QuizPage({ topic }: QuizPageProps) {
   const [badResponse, setBadResponse] = useState<boolean>(false);
   const [userExists, setUserExists] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   const validTopics = ["SPO", "SCI", "TECH", "HIS", "ART", "GEO"];
@@ -28,24 +33,27 @@ function QuizPage({ topic }: QuizPageProps) {
     }
   }, [token, username]);
 
-  const fetchQuestion = useCallback(async (topic: string) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/question/getQuestion?topic=${topic}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      setBadResponse(true);
-      console.error("Error al obtener la pregunta: ", error);
-    }
-  }, [token]);
+  const fetchQuestion = useCallback(
+    async (topic: string) => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/question/getQuestion?topic=${topic}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        setBadResponse(true);
+        console.error("Error al obtener la pregunta: ", error);
+      }
+    },
+    [token]
+  );
 
   const sendStat = async (isCorrectAnswer: boolean) => {
     try {
@@ -88,6 +96,10 @@ function QuizPage({ topic }: QuizPageProps) {
     }
     setAnswered(true);
     sendStat(isCorrectAnswer);
+  };
+
+  const handleNavigateMenu = () => {
+    navigate("/");
   };
 
   const handleNextQuestion = async () => {
@@ -173,9 +185,14 @@ function QuizPage({ topic }: QuizPageProps) {
                 </div>
               )}
               {answered && (
-                <button onClick={handleNextQuestion} className="nextQuestion">
-                  Siguiente Pregunta
-                </button>
+                <div>
+                  <button onClick={handleNavigateMenu} className="menuButton">
+                    <img src={homeLogo} alt="Game logo" /> Volver al menú
+                  </button>
+                  <button onClick={handleNextQuestion} className="nextQuestion">
+                    <img src={gameLogo} alt="Game logo" /> Siguiente Pregunta
+                  </button>
+                </div>
               )}
             </div>
           </>
